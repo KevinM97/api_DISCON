@@ -12,7 +12,7 @@ namespace api_DISCON.Models
         public string username { get; set; }
         public string NombreUsuario { get; set; }
         public string EmailUsuario { get; set; }
-        public string EstadoUsuario { get; set; }
+        public bool? EstadoUsuario { get; set; }
         public string tokenUsuario { get; set; }
     }
 }

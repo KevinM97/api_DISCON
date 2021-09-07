@@ -16,12 +16,14 @@ namespace api_DISCON.Models
         [Column("ID_CLASMOD", TypeName = "int(11)")]
         public int IdClasmod { get; set; }
         [Column("ID_PREGUNTA", TypeName = "int(11)")]
-        public int IdPregunta { get; set; }
+        public int? IdPregunta { get; set; }
         [Column("NOMBRE_CLASMOD", TypeName = "varchar(50)")]
         public string NombreClasmod { get; set; }
         [Column("VIDEO_CLASMOD", TypeName = "varchar(50)")]
         public string VideoClasmod { get; set; }
         [Column("VALOR_CLASMOD")]
-        public bool ValorClasmod { get; set; }
+        public bool? ValorClasmod { get; set; }
+        [Column("ESTADO_CLASMOD", TypeName = "char(10)")]
+        public string EstadoClasmod { get; set; }
     }
 }

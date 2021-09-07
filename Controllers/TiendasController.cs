@@ -21,9 +21,9 @@ namespace api_DISCON.Controllers
         }
         
         [HttpPost("Listar")]
-        public async Task<IActionResult> Get(Tiendas t)
+        public async Task<IActionResult> Get(Tiendas ts)
         {
-            if (t.IdTienda == 0 && t.IdProducto == 0)
+            if (ts.IdTienda == 0)
             {
                 List<Tiendas> tiendasList = await ctx.Tiendas.ToListAsync();
                 List<Tiendas> listTiendas = new List<Tiendas>();
@@ -32,8 +32,8 @@ namespace api_DISCON.Controllers
                     Tiendas tiendasls = new Tiendas
                     {
                         IdTienda = tienda.IdTienda,
-                        IdProducto = tienda.IdProducto,
-                        NombreTienda = tienda.NombreTienda
+                        NombreTienda = tienda.NombreTienda,
+                        EstadoTienda = tienda.EstadoTienda
                     };
 
                     listTiendas.Add(tiendasls);
@@ -41,94 +41,103 @@ namespace api_DISCON.Controllers
 
                 reply.ok = true;
                 reply.data = listTiendas;
-            }
-            else if (t.IdTienda == 0 && t.IdProducto!= 0)
-            {
-                var listTiendas = await ctx.Tiendas.Where(e => e.IdProducto == t.IdProducto).ToListAsync();
-                List<Tiendas> tiendaList = new List<Tiendas>();
 
-                if(listTiendas.Count()==0)
+                return Ok(reply);
+            }
+            else
+            {
+                var tiendas = await ctx.Tiendas.FirstOrDefaultAsync(e => e.IdTienda == ts.IdTienda);
+
+                if (tiendas == null)
                 {
                     reply.ok = false;
-                    reply.data = "No hay productos registradas";
+                    reply.data = "No encontrado";
 
                     return Ok(reply);
                 }
                 else
                 {
-                    foreach (var tienda in listTiendas)
-                    {
-                        Tiendas tiendasls = new Tiendas
-                        {
-                            IdTienda = tienda.IdTienda,
-                            IdProducto = tienda.IdProducto,
-                            NombreTienda = tienda.NombreTienda
-                        };
 
-                        listTiendas.Add(tiendasls);
-                    }
+                    Tiendas lsTiend = new Tiendas();
+                    lsTiend.IdTienda = tiendas.IdTienda;
+                    lsTiend.NombreTienda = tiendas.NombreTienda;
+                    lsTiend.EstadoTienda = tiendas.EstadoTienda;
+
 
                     reply.ok = true;
-                    reply.data = tiendaList;
-                return Ok(reply);
+                    reply.data = tiendas;
+
+                    return Ok(reply);
                 }
             }
-        else if (t.IdTienda != 0 && t.IdProducto != 0)
-            {
-                var tiendas = await ctx.Tiendas.FirstOrDefaultAsync(e => e.IdTienda == t.IdTienda && e.IdProducto == t.IdProducto);
-
-                if(tiendas == null)
-                {
-                    reply.ok = false;
-                    reply.data = "Tienda no encontrada";
-
-                }
-                else
-                {
-                    Tiendas tiendals = new Tiendas
-                    {
-                        IdTienda = tiendas.IdTienda,
-                        IdProducto = tiendas.IdProducto,
-                        NombreTienda = tiendas.NombreTienda
-                    };
-
-                    reply.ok = true;
-                    reply.data = tiendals;
-                }
-            }
-            return Ok(reply);
     }
 
         [HttpPost("InsertarActualizar")]
         public async Task<IActionResult> Post([FromBody] Tiendas t)
         {
-
-            if (t.IdTienda == 0)
+            try
             {
-                ctx.Tiendas.Add(t);
+                var u = await ctx.Tiendas.FirstOrDefaultAsync(e => e.NombreTienda == t.NombreTienda);
+                //Insertar
+                if (t.IdTienda == 0 && u != null)//nombre existe
+                {
 
-                reply.ok = true;
-                reply.data = t;
+                    reply.ok = false;
+                    reply.data = "Nombre de tienda en uso";
+
+                }
+
+                else if (t.IdTienda == 0 && u == null) //nombre NO existe
+                {
+                    ctx.Tiendas.Add(t);
+
+                    reply.ok = true;
+                    reply.data = t;
+                }
+                //Actualizar
+                else if (t.IdTienda != 0 && u == null) //nombre NO existe
+                {
+                    var userName = await ctx.Tiendas.FirstOrDefaultAsync(e => e.IdTienda == t.IdTienda);
+
+                    userName.IdTienda = t.IdTienda;
+                    userName.NombreTienda = t.NombreTienda;
+                    userName.EstadoTienda = t.EstadoTienda;
+
+
+                    ctx.Entry(userName).State = EntityState.Modified;
+                    reply.ok = true;
+                    reply.data = t;
+                }
+                else if (t.IdTienda != 0 && u != null && t.IdTienda != u.IdTienda) //nombre SI existe
+                {
+                    reply.ok = false;
+                    reply.data = "Nombre de tienda en uso";
+
+                }
+                else if (t.IdTienda != 0 && u != null && t.IdTienda == u.IdTienda) //nombre es el mismo que ya tenía
+                {
+
+                    var userName = await ctx.Tiendas.FirstAsync(e => e.IdTienda == u.IdTienda);
+
+                    userName.IdTienda = t.IdTienda;
+                    userName.NombreTienda = t.NombreTienda;
+                    userName.EstadoTienda = t.EstadoTienda;
+
+                    ctx.Entry(userName).CurrentValues.SetValues(userName);
+
+                    reply.ok = true;
+                    reply.data = userName;
+
+                }
+                await ctx.SaveChangesAsync();
+                return Ok(reply);
             }
-            else if (t.IdTienda != 0)
+            catch
             {
-                var finName = await ctx.Tiendas.FirstOrDefaultAsync(e => e.IdTienda == t.IdTienda);
-
-
-                finName.IdTienda = t.IdTienda;
-                finName.IdProducto = t.IdProducto;
-                finName.NombreTienda = t.NombreTienda;
-
-
-                ctx.Entry(finName).State = EntityState.Modified;
-                reply.ok = true;
-                reply.data = t;
+                reply.ok = false;
+                reply.data = "Error";
+                return BadRequest(reply);
             }
-            await ctx.SaveChangesAsync();
-            return Created("Venta", reply);
-
-
-
         }
     }
 }

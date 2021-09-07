@@ -9,15 +9,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace api_DISCON.Models
 {
-    [Table("tiendas")]
-    public partial class Tiendas
+    [Table("respuesta_pregunta")]
+    public partial class RespuestaPregunta
     {
-        [Key]
-        [Column("ID_TIENDA", TypeName = "int(11)")]
-        public int IdTienda { get; set; }
-        [Column("NOMBRE_TIENDA", TypeName = "varchar(50)")]
-        public string NombreTienda { get; set; }
-        [Column("ESTADO_TIENDA")]
-        public bool? EstadoTienda { get; set; }
+        [Column("ID_RESPUESTA", TypeName = "int(11)")]
+        public int? IdRespuesta { get; set; }
+        [Column("ID_PREGUNTA", TypeName = "int(11)")]
+        public int? IdPregunta { get; set; }
     }
 }

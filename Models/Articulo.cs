@@ -21,8 +21,7 @@ namespace api_DISCON.Models
         public string ImagenArticulo { get; set; }
         [Column("TEXTO_ARTICULO", TypeName = "varchar(10000)")]
         public string TextoArticulo { get; set; }
-        [Column("ESTADO_ARTICULO", TypeName = "bool")]
-        public bool EstadoArticulo { get; set; }
-
+        [Column("ESTADO_ARTICULO", TypeName = "char(10)")]
+        public string EstadoArticulo { get; set; }
     }
 }

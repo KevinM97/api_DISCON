@@ -25,5 +25,7 @@ namespace api_DISCON.Models
         public string DescripcionCurso { get; set; }
         [Column("IMAGEN_CURSO", TypeName = "varchar(50)")]
         public string ImagenCurso { get; set; }
+        [Column("ESTADO_CURSO")]
+        public bool? EstadoCurso { get; set; }
     }
 }

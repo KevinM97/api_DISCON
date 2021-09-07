@@ -21,7 +21,7 @@ namespace api_DISCON.Models
         public string NombreUsuario { get; set; }
         [Column("EMAIL_USUARIO", TypeName = "varchar(50)")]
         public string EmailUsuario { get; set; }
-        [Column("ESTADO_USUARIO", TypeName = "varchar(50)")]
-        public string EstadoUsuario { get; set; }
+        [Column("ESTADO_USUARIO")]
+        public bool? EstadoUsuario { get; set; }
     }
 }

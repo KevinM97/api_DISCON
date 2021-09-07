@@ -17,8 +17,10 @@ namespace api_DISCON.Models
         public int IdRevista { get; set; }
         [Column("ID_SECCION", TypeName = "int(11)")]
         public int? IdSeccion { get; set; }
-
+        [Required]
         [Column("NOMBRE_REVISTA", TypeName = "varchar(50)")]
         public string NombreRevista { get; set; }
+        [Column("ESTADO_REVISTA")]
+        public bool? EstadoRevista { get; set; }
     }
 }

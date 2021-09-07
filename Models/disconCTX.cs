@@ -28,11 +28,15 @@ namespace api_DISCON.Models
         public virtual DbSet<Obras> Obras { get; set; }
         public virtual DbSet<PreguntasClas> PreguntasClas { get; set; }
         public virtual DbSet<Productos> Productos { get; set; }
+        public virtual DbSet<ProductosTiendas> ProductosTiendas { get; set; }
+        public virtual DbSet<RespuestaPregunta> RespuestaPregunta { get; set; }
         public virtual DbSet<Respuestas> Respuestas { get; set; }
         public virtual DbSet<Revista> Revista { get; set; }
         public virtual DbSet<Secciones> Secciones { get; set; }
+        public virtual DbSet<SeccionesArticulos> SeccionesArticulos { get; set; }
         public virtual DbSet<Tiendas> Tiendas { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -40,6 +44,10 @@ namespace api_DISCON.Models
             {
                 entity.HasKey(e => e.IdArticulo)
                     .HasName("PRIMARY");
+
+                entity.Property(e => e.EstadoArticulo)
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_spanish2_ci");
 
                 entity.Property(e => e.ImagenArticulo)
                     .HasCharSet("utf8")
@@ -61,6 +69,10 @@ namespace api_DISCON.Models
 
                 entity.HasIndex(e => e.IdPregunta)
                     .HasName("FK_RELATIONSHIP_2");
+
+                entity.Property(e => e.EstadoClasmod)
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_spanish2_ci");
 
                 entity.Property(e => e.NombreClasmod)
                     .HasCharSet("utf8")
@@ -140,6 +152,10 @@ namespace api_DISCON.Models
                 entity.HasIndex(e => e.IdImagenobra)
                     .HasName("FK_RELATIONSHIP_10");
 
+                entity.Property(e => e.EstadoObra)
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_spanish2_ci");
+
                 entity.Property(e => e.TituloObra)
                     .HasCharSet("utf8")
                     .HasCollation("utf8_spanish2_ci");
@@ -149,9 +165,6 @@ namespace api_DISCON.Models
             {
                 entity.HasKey(e => e.IdPregunta)
                     .HasName("PRIMARY");
-
-                entity.HasIndex(e => e.IdRespuesta)
-                    .HasName("FK_RELATIONSHIP_1");
 
                 entity.Property(e => e.TituloPregunta)
                     .HasCharSet("utf8")
@@ -163,6 +176,7 @@ namespace api_DISCON.Models
                 entity.HasKey(e => e.IdProducto)
                     .HasName("PRIMARY");
 
+
                 entity.Property(e => e.DescripcionProd)
                     .HasCharSet("utf8")
                     .HasCollation("utf8_spanish2_ci");
@@ -170,6 +184,28 @@ namespace api_DISCON.Models
                 entity.Property(e => e.NombreProducto)
                     .HasCharSet("utf8")
                     .HasCollation("utf8_spanish2_ci");
+            });
+
+            modelBuilder.Entity<ProductosTiendas>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.HasIndex(e => e.IdProducto)
+                    .HasName("FK_RELATIONSHIP_12");
+
+                entity.HasIndex(e => e.IdTienda)
+                    .HasName("FK_RELATIONSHIP_11");
+            });
+
+            modelBuilder.Entity<RespuestaPregunta>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.HasIndex(e => e.IdPregunta)
+                    .HasName("FK_RELATIONSHIP_14");
+
+                entity.HasIndex(e => e.IdRespuesta)
+                    .HasName("FK_RELATIONSHIP_13");
             });
 
             modelBuilder.Entity<Respuestas>(entity =>
@@ -200,21 +236,30 @@ namespace api_DISCON.Models
                 entity.HasKey(e => e.IdSeccion)
                     .HasName("PRIMARY");
 
-                entity.HasIndex(e => e.IdArticulo)
-                    .HasName("FK_RELATIONSHIP_7");
+                entity.Property(e => e.EstadoSeccion)
+                    .HasCharSet("utf8")
+                    .HasCollation("utf8_spanish2_ci");
 
                 entity.Property(e => e.NombreSeccion)
                     .HasCharSet("utf8")
                     .HasCollation("utf8_spanish2_ci");
             });
 
+            modelBuilder.Entity<SeccionesArticulos>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.HasIndex(e => e.IdArticulo)
+                    .HasName("FK_RELATIONSHIP_15");
+
+                entity.HasIndex(e => e.IdSeccion)
+                    .HasName("FK_RELATIONSHIP_16");
+            });
+
             modelBuilder.Entity<Tiendas>(entity =>
             {
                 entity.HasKey(e => e.IdTienda)
                     .HasName("PRIMARY");
-
-                entity.HasIndex(e => e.IdProducto)
-                    .HasName("FK_RELATIONSHIP_9");
 
                 entity.Property(e => e.NombreTienda)
                     .HasCharSet("utf8")
@@ -230,10 +275,6 @@ namespace api_DISCON.Models
                     .HasName("FK_RELATIONSHIP_6");
 
                 entity.Property(e => e.EmailUsuario)
-                    .HasCharSet("utf8")
-                    .HasCollation("utf8_spanish2_ci");
-
-                entity.Property(e => e.EstadoUsuario)
                     .HasCharSet("utf8")
                     .HasCollation("utf8_spanish2_ci");
 

@@ -16,8 +16,10 @@ namespace api_DISCON.Models
         [Column("ID_OBRA", TypeName = "int(11)")]
         public int IdObra { get; set; }
         [Column("ID_IMAGENOBRA", TypeName = "int(11)")]
-        public int IdImagenobra { get; set; }
+        public int? IdImagenobra { get; set; }
         [Column("TITULO_OBRA", TypeName = "varchar(50)")]
         public string TituloObra { get; set; }
+        [Column("ESTADO_OBRA", TypeName = "char(10)")]
+        public string EstadoObra { get; set; }
     }
 }

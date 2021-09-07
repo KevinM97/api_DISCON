@@ -20,6 +20,8 @@ namespace api_DISCON.Models
         [Column("TITULO_MODULO", TypeName = "varchar(50)")]
         public string TituloModulo { get; set; }
         [Column("PROGRESO_MODULO")]
-        public bool ProgresoModulo { get; set; }
+        public bool? ProgresoModulo { get; set; }
+        [Column("ESTADO_MODULO")]
+        public bool? EstadoModulo { get; set; }
     }
 }

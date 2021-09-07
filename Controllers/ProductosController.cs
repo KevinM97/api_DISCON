@@ -36,7 +36,8 @@ namespace api_DISCON.Controllers
                         IdProducto = productos.IdProducto,
                         NombreProducto = productos.NombreProducto,
                         PrecioProducto = productos.PrecioProducto,
-                        DescripcionProd = productos.DescripcionProd
+                        DescripcionProd = productos.DescripcionProd,
+                        EstadoProd = productos.EstadoProd
 
                     };
 
@@ -67,6 +68,7 @@ namespace api_DISCON.Controllers
                     lsProd.NombreProducto = productos.NombreProducto;
                     lsProd.PrecioProducto = productos.PrecioProducto;
                     lsProd.DescripcionProd = productos.DescripcionProd;
+                    lsProd.EstadoProd = productos.EstadoProd;
 
                     reply.ok = true;
                     reply.data = productos;
@@ -129,6 +131,7 @@ namespace api_DISCON.Controllers
                     productoName.NombreProducto = pr.NombreProducto;
                     productoName.PrecioProducto = pr.PrecioProducto;
                     productoName.DescripcionProd = pr.DescripcionProd;
+                    productoName.EstadoProd = pr.EstadoProd;
 
                     ctx.Entry(productoName).CurrentValues.SetValues(productoName);
 

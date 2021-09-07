@@ -15,14 +15,13 @@ namespace api_DISCON.Models
         [Key]
         [Column("ID_PRODUCTO", TypeName = "int(11)")]
         public int IdProducto { get; set; }
-
         [Column("NOMBRE_PRODUCTO", TypeName = "varchar(50)")]
         public string NombreProducto { get; set; }
         [Column("PRECIO_PRODUCTO", TypeName = "decimal(10,2)")]
-        public decimal PrecioProducto { get; set; }
-
+        public decimal? PrecioProducto { get; set; }
         [Column("DESCRIPCION_PROD", TypeName = "varchar(100)")]
         public string DescripcionProd { get; set; }
-
+        [Column("ESTADO_PROD")]
+        public bool? EstadoProd { get; set; }
     }
 }
