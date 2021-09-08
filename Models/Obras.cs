@@ -19,7 +19,7 @@ namespace api_DISCON.Models
         public int? IdImagenobra { get; set; }
         [Column("TITULO_OBRA", TypeName = "varchar(50)")]
         public string TituloObra { get; set; }
-        [Column("ESTADO_OBRA", TypeName = "char(10)")]
-        public string EstadoObra { get; set; }
+        [Column("ESTADO_OBRA")]
+        public bool? EstadoObra { get; set; }
     }
 }

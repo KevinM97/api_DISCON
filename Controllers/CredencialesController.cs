@@ -1,4 +1,5 @@
-﻿using api_DISCON.Models;
+﻿using api_DISCON.Helper;
+using api_DISCON.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -32,8 +33,11 @@ namespace api_DISCON.Controllers
                     {
                         IdCreden = credencial.IdCreden,
                         UsernameCreden = credencial.UsernameCreden,
-                        PasswordCreden = credencial.PasswordCreden
+                        PasswordCreden = credencial.PasswordCreden,
+                        //SaltPassword = credencial.SaltPassword
+                        
                     };
+                   
 
                     credenList.Add(credenLis);
                 }
@@ -61,6 +65,7 @@ namespace api_DISCON.Controllers
                     lsCreden.IdCreden = credencial.IdCreden;
                     lsCreden.UsernameCreden = credencial.UsernameCreden;
                     lsCreden.PasswordCreden = credencial.PasswordCreden;
+                    //lsCreden.SaltPassword = credencial.SaltPassword;
 
                     reply.ok = true;
                     reply.data = credencial;
@@ -87,6 +92,11 @@ namespace api_DISCON.Controllers
 
                 else if (cr.IdCreden == 0 && u == null) //nombre NO existe
                 {
+
+                    var hash = HashHelper.Hash(cr.PasswordCreden);
+                    cr.PasswordCreden = hash.Password;
+                    cr.SaltPassword = hash.Salt;
+
                     ctx.Credenciales.Add(cr);
 
                     reply.ok = true;
@@ -100,6 +110,7 @@ namespace api_DISCON.Controllers
                     userName.IdCreden = cr.IdCreden;
                     userName.UsernameCreden = cr.UsernameCreden;
                     userName.PasswordCreden = cr.PasswordCreden;
+                    //userName.SaltPassword = cr.SaltPassword;
 
 
                     ctx.Entry(userName).State = EntityState.Modified;
@@ -120,6 +131,7 @@ namespace api_DISCON.Controllers
                     userName.IdCreden = cr.IdCreden;
                     userName.UsernameCreden = cr.UsernameCreden;
                     userName.PasswordCreden = cr.PasswordCreden;
+                   // userName.SaltPassword = cr.SaltPassword;
 
                     ctx.Entry(userName).CurrentValues.SetValues(userName);
 

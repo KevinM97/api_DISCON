@@ -1,4 +1,5 @@
 ﻿using api_DISCON.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace api_DISCON.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CursoController : ControllerBase

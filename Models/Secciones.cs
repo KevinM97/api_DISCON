@@ -15,10 +15,9 @@ namespace api_DISCON.Models
         [Key]
         [Column("ID_SECCION", TypeName = "int(11)")]
         public int IdSeccion { get; set; }
-        [Required]
         [Column("NOMBRE_SECCION", TypeName = "varchar(50)")]
         public string NombreSeccion { get; set; }
-        [Column("ESTADO_SECCION", TypeName = "char(10)")]
-        public string EstadoSeccion { get; set; }
+        [Column("ESTADO_SECCION")]
+        public bool? EstadoSeccion { get; set; }
     }
 }

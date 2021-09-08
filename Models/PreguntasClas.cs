@@ -15,11 +15,10 @@ namespace api_DISCON.Models
         [Key]
         [Column("ID_PREGUNTA", TypeName = "int(11)")]
         public int IdPregunta { get; set; }
-        [Required]
         [Column("TITULO_PREGUNTA", TypeName = "varchar(100)")]
         public string TituloPregunta { get; set; }
         [Column("VALOR_PREGUNTA")]
-        public bool ValorPregunta { get; set; }
+        public bool? ValorPregunta { get; set; }
         [Column("ESTADO_PREGUNTA")]
         public bool? EstadoPregunta { get; set; }
     }

@@ -23,7 +23,7 @@ namespace api_DISCON.Models
         public string VideoClasmod { get; set; }
         [Column("VALOR_CLASMOD")]
         public bool? ValorClasmod { get; set; }
-        [Column("ESTADO_CLASMOD", TypeName = "char(10)")]
-        public string EstadoClasmod { get; set; }
+        [Column("ESTADO_CLASMOD")]
+        public bool? EstadoClasmod { get; set; }
     }
 }

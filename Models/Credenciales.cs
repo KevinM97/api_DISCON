@@ -15,9 +15,14 @@ namespace api_DISCON.Models
         [Key]
         [Column("ID_CREDEN", TypeName = "int(11)")]
         public int IdCreden { get; set; }
+
         [Column("USERNAME_CREDEN", TypeName = "varchar(20)")]
         public string UsernameCreden { get; set; }
+
         [Column("PASSWORD_CREDEN", TypeName = "varchar(300)")]
         public string PasswordCreden { get; set; }
+
+        [Column("SALT_PASSWORD", TypeName = "varchar(500)")]
+        public string SaltPassword { get; set; }
     }
 }

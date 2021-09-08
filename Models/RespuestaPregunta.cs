@@ -12,6 +12,9 @@ namespace api_DISCON.Models
     [Table("respuesta_pregunta")]
     public partial class RespuestaPregunta
     {
+        [Key]
+        [Column("id_pregresp", TypeName = "int(11)")]
+        public int IdPregresp { get; set; }
         [Column("ID_RESPUESTA", TypeName = "int(11)")]
         public int? IdRespuesta { get; set; }
         [Column("ID_PREGUNTA", TypeName = "int(11)")]

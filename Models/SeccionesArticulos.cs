@@ -12,6 +12,9 @@ namespace api_DISCON.Models
     [Table("secciones_articulos")]
     public partial class SeccionesArticulos
     {
+        [Key]
+        [Column("id_seccart", TypeName = "int(11)")]
+        public int IdSeccart { get; set; }
         [Column("ID_ARTICULO", TypeName = "int(11)")]
         public int? IdArticulo { get; set; }
         [Column("ID_SECCION", TypeName = "int(11)")]

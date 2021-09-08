@@ -1,4 +1,5 @@
-﻿using api_DISCON.Models;
+﻿using api_DISCON.Helper;
+using api_DISCON.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -48,7 +49,11 @@ namespace api_DISCON.Controllers
                     return Ok(respuesta);
                 }
                 else
-                {
+                {/*
+                    if (HashHelper.CheckHash(Login.passUsuario, usuario.PasswordCreden, usuario.SaltPassword)) 
+                    {
+
+                    }*/
                     Usuarios user = await ctx.Usuarios.Where(x => x.IdCreden == usuario.IdCreden).FirstOrDefaultAsync();
                     var secretKey = config.GetValue<string>("SecretKey");
                     var key = Encoding.ASCII.GetBytes(secretKey);
