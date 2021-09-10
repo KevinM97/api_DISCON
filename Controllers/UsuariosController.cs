@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace api_DISCON.Controllers
 {
-    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class UsuariosController : ControllerBase
