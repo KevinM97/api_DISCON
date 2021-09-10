@@ -23,7 +23,9 @@ namespace api_DISCON.Models
         public virtual DbSet<Clasemodulo> Clasemodulo { get; set; }
         public virtual DbSet<Credenciales> Credenciales { get; set; }
         public virtual DbSet<Curso> Curso { get; set; }
+        public virtual DbSet<CursoModulo> CursoModulo { get; set; }
         public virtual DbSet<ImagenesObra> ImagenesObra { get; set; }
+        public virtual DbSet<ModuloClasemod> ModuloClasemod { get; set; }
         public virtual DbSet<Modulos> Modulos { get; set; }
         public virtual DbSet<Obras> Obras { get; set; }
         public virtual DbSet<PreguntasClas> PreguntasClas { get; set; }
@@ -35,6 +37,7 @@ namespace api_DISCON.Models
         public virtual DbSet<Secciones> Secciones { get; set; }
         public virtual DbSet<SeccionesArticulos> SeccionesArticulos { get; set; }
         public virtual DbSet<Tiendas> Tiendas { get; set; }
+        public virtual DbSet<UsuarioCursos> UsuarioCursos { get; set; }
         public virtual DbSet<Usuarios> Usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -116,6 +119,18 @@ namespace api_DISCON.Models
                     .HasCollation("utf8_spanish2_ci");
             });
 
+            modelBuilder.Entity<CursoModulo>(entity =>
+            {
+                entity.HasKey(e => e.IdCursomod)
+                    .HasName("PRIMARY");
+
+                entity.HasIndex(e => e.IdCurso)
+                    .HasName("FK_RELATIONSHIP_20");
+
+                entity.HasIndex(e => e.IdModulo)
+                    .HasName("FK_RELATIONSHIP_19");
+            });
+
             modelBuilder.Entity<ImagenesObra>(entity =>
             {
                 entity.HasKey(e => e.IdImagenobra)
@@ -124,6 +139,18 @@ namespace api_DISCON.Models
                 entity.Property(e => e.UrlImagenobra)
                     .HasCharSet("utf8")
                     .HasCollation("utf8_spanish2_ci");
+            });
+
+            modelBuilder.Entity<ModuloClasemod>(entity =>
+            {
+                entity.HasKey(e => e.IdModclas)
+                    .HasName("PRIMARY");
+
+                entity.HasIndex(e => e.IdClasmod)
+                    .HasName("FK_RELATIONSHIP_18");
+
+                entity.HasIndex(e => e.IdModulo)
+                    .HasName("FK_RELATIONSHIP_17");
             });
 
             modelBuilder.Entity<Modulos>(entity =>
@@ -253,6 +280,18 @@ namespace api_DISCON.Models
                 entity.Property(e => e.NombreTienda)
                     .HasCharSet("utf8")
                     .HasCollation("utf8_spanish2_ci");
+            });
+
+            modelBuilder.Entity<UsuarioCursos>(entity =>
+            {
+                entity.HasKey(e => e.IdUsucu)
+                    .HasName("PRIMARY");
+
+                entity.HasIndex(e => e.IdCurso)
+                    .HasName("FK_RELATIONSHIP_22");
+
+                entity.HasIndex(e => e.IdUsuario)
+                    .HasName("FK_RELATIONSHIP_21");
             });
 
             modelBuilder.Entity<Usuarios>(entity =>
