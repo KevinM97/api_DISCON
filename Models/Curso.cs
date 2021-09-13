@@ -17,11 +17,9 @@ namespace api_DISCON.Models
         public int IdCurso { get; set; }
         [Column("ID_MODULO", TypeName = "int(11)")]
         public int? IdModulo { get; set; }
-        [Column("ID_USUARIO", TypeName = "int(11)")]
-        public int? IdUsuario { get; set; }
         [Column("NOMBRE_CURSO", TypeName = "varchar(20)")]
         public string NombreCurso { get; set; }
-        [Column("DESCRIPCION_CURSO", TypeName = "varchar(20)")]
+        [Column("DESCRIPCION_CURSO", TypeName = "varchar(10000)")]
         public string DescripcionCurso { get; set; }
         [Column("IMAGEN_CURSO", TypeName = "varchar(50)")]
         public string ImagenCurso { get; set; }

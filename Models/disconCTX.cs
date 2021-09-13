@@ -103,9 +103,6 @@ namespace api_DISCON.Models
                 entity.HasIndex(e => e.IdModulo)
                     .HasName("FK_RELATIONSHIP_4");
 
-                entity.HasIndex(e => e.IdUsuario)
-                    .HasName("FK_RELATIONSHIP_5");
-
                 entity.Property(e => e.DescripcionCurso)
                     .HasCharSet("utf8")
                     .HasCollation("utf8_spanish2_ci");

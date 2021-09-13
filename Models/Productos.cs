@@ -19,7 +19,7 @@ namespace api_DISCON.Models
         public string NombreProducto { get; set; }
         [Column("PRECIO_PRODUCTO", TypeName = "decimal(10,2)")]
         public decimal? PrecioProducto { get; set; }
-        [Column("DESCRIPCION_PROD", TypeName = "varchar(100)")]
+        [Column("DESCRIPCION_PROD", TypeName = "varchar(500)")]
         public string DescripcionProd { get; set; }
         [Column("ESTADO_PROD")]
         public bool? EstadoProd { get; set; }

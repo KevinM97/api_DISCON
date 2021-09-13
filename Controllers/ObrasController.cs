@@ -84,7 +84,7 @@ namespace api_DISCON.Controllers
             {
                 var u = await ctx.Obras.FirstOrDefaultAsync(e => e.TituloObra == ob.TituloObra);
                 //Insertar
-                if (ob.IdObra == 0 && u != null)//nombre existe
+                if (ob.IdObra == 0 && u != null)
                 {
 
                     reply.ok = false;
@@ -92,7 +92,7 @@ namespace api_DISCON.Controllers
 
                 }
 
-                else if (ob.IdObra == 0 && u == null) //nombre NO existe
+                else if (ob.IdObra == 0 && u == null)
                 {
                     ctx.Obras.Add(ob);
 
@@ -100,7 +100,7 @@ namespace api_DISCON.Controllers
                     reply.data = ob;
                 }
                 //Actualizar
-                else if (ob.IdObra != 0 && u == null) //nombre NO existe
+                else if (ob.IdObra != 0 && u == null)
                 {
                     var obraName = await ctx.Obras.FirstOrDefaultAsync(e => e.IdObra == ob.IdObra);
 
@@ -114,13 +114,13 @@ namespace api_DISCON.Controllers
                     reply.ok = true;
                     reply.data = ob;
                 }
-                else if (ob.IdObra != 0 && u != null && ob.IdObra != u.IdObra) //nombre SI existe
+                else if (ob.IdObra != 0 && u != null && ob.IdObra != u.IdObra)
                 {
                     reply.ok = false;
                     reply.data = "Nombre de obra en uso";
 
                 }
-                else if (ob.IdObra != 0 && u != null && ob.IdObra == u.IdObra) //nombre es el mismo que ya tenía
+                else if (ob.IdObra != 0 && u != null && ob.IdObra == u.IdObra)
                 {
 
                     var obraName = await ctx.Obras.FirstAsync(e => e.IdObra == u.IdObra);

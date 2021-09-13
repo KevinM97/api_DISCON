@@ -10,30 +10,30 @@ namespace api_DISCON.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class CursoModuloController : ControllerBase
+    public class UsuarioCursosController : ControllerBase
     {
         private readonly disconCTX ctx;
         Respuesta reply = new Respuesta();
 
-        public CursoModuloController(disconCTX _ctx)
+        public UsuarioCursosController(disconCTX _ctx)
         {
-            ctx = _ctx;
+            ctx = _ctx; 
         }
 
         [HttpPost("Listar")]
-        public async Task<IActionResult> Get(CursoModulo ts)
+        public async Task<IActionResult> Get(UsuarioCursos ts)
         {
-            if (ts.IdCurso == 0 && ts.IdModulo == 0)
+            if (ts.IdUsuario == 0 && ts.IdCurso == 0)
             {
-                List<CursoModulo> tiendasList = await ctx.CursoModulo.ToListAsync();
-                List<CursoModulo> listTiendas = new List<CursoModulo>();
+                List<UsuarioCursos> tiendasList = await ctx.UsuarioCursos.ToListAsync();
+                List<UsuarioCursos> listTiendas = new List<UsuarioCursos>();
                 foreach (var curs in tiendasList)
                 {
-                    CursoModulo cursols = new CursoModulo
+                    UsuarioCursos cursols = new UsuarioCursos
                     {
-                        IdCursomod = curs.IdCursomod,
-                        IdCurso = curs.IdCurso,
-                        IdModulo = curs.IdModulo
+                        IdUsucu = curs.IdUsucu,
+                        IdUsuario = curs.IdUsuario,
+                        IdCurso = curs.IdCurso
                     };
 
                     listTiendas.Add(cursols);
@@ -42,15 +42,15 @@ namespace api_DISCON.Controllers
                 reply.ok = true;
                 reply.data = listTiendas;
             }
-            else if (ts.IdCurso == 0 && ts.IdModulo != 0)
+            else if (ts.IdUsuario == 0 && ts.IdCurso != 0)
             {
-                var listTiendas = await ctx.CursoModulo.Where(e => e.IdModulo == ts.IdModulo).ToListAsync();
-                List<CursoModulo> tiendaList = new List<CursoModulo>();
+                var listTiendas = await ctx.UsuarioCursos.Where(e => e.IdCurso == ts.IdCurso).ToListAsync();
+                List<UsuarioCursos> tiendaList = new List<UsuarioCursos>();
 
                 if (listTiendas.Count() == 0)
                 {
                     reply.ok = false;
-                    reply.data = "No existe ese modulo registrado";
+                    reply.data = "No existe ese curso registrado para ese usuario";
 
                     return Ok(reply);
                 }
@@ -58,11 +58,11 @@ namespace api_DISCON.Controllers
                 {
                     foreach (var curs in listTiendas)
                     {
-                        CursoModulo tiendasls = new CursoModulo
+                        UsuarioCursos tiendasls = new UsuarioCursos
                         {
-                            IdCursomod = curs.IdCursomod,
-                            IdCurso = curs.IdCurso,
-                            IdModulo = curs.IdModulo
+                            IdUsucu = curs.IdUsucu,
+                            IdUsuario = curs.IdUsuario,
+                            IdCurso = curs.IdCurso
                         };
 
                         tiendaList.Add(tiendasls);
@@ -73,33 +73,33 @@ namespace api_DISCON.Controllers
                     return Ok(reply);
                 }
             }
-            else if (ts.IdCurso != 0 && ts.IdModulo != 0)
+            else if (ts.IdUsuario != 0 && ts.IdCurso != 0)
             {
-                var curs = await ctx.CursoModulo.FirstOrDefaultAsync(e => e.IdCurso == ts.IdCurso && e.IdModulo == ts.IdModulo);
+                var curs = await ctx.UsuarioCursos.FirstOrDefaultAsync(e => e.IdUsuario == ts.IdUsuario && e.IdCurso == ts.IdCurso);
 
                 if (curs == null)
                 {
                     reply.ok = false;
-                    reply.data = "Curso no encontrado";
+                    reply.data = "Usuario no encontrado";
 
                 }
                 else
                 {
-                    CursoModulo tiendals = new CursoModulo
+                    UsuarioCursos tiendals = new UsuarioCursos
                     {
-                        IdCursomod = curs.IdCursomod,
-                        IdCurso = curs.IdCurso,
-                        IdModulo = curs.IdModulo
+                        IdUsucu = curs.IdUsucu,
+                        IdUsuario = curs.IdUsuario,
+                        IdCurso = curs.IdCurso
                     };
 
                     reply.ok = true;
                     reply.data = tiendals;
                 }
             }
-            else if (ts.IdCurso != 0 && ts.IdModulo == 0)
+            else if (ts.IdUsuario != 0 && ts.IdCurso == 0)
             {
-                var listTiendas = await ctx.CursoModulo.Where(e => e.IdCurso == ts.IdCurso).ToListAsync();
-                List<CursoModulo> tiendaList = new List<CursoModulo>();
+                var listTiendas = await ctx.UsuarioCursos.Where(e => e.IdUsuario == ts.IdUsuario).ToListAsync();
+                List<UsuarioCursos> tiendaList = new List<UsuarioCursos>();
 
                 if (listTiendas.Count() == 0)
                 {
@@ -112,11 +112,11 @@ namespace api_DISCON.Controllers
                 {
                     foreach (var curs in listTiendas)
                     {
-                        CursoModulo tiendasls = new CursoModulo
+                        UsuarioCursos tiendasls = new UsuarioCursos
                         {
-                            IdCursomod = curs.IdCursomod,
-                            IdCurso = curs.IdCurso,
-                            IdModulo = curs.IdModulo
+                            IdUsucu = curs.IdUsucu,
+                            IdUsuario = curs.IdUsuario,
+                            IdCurso = curs.IdCurso
                         };
 
                         tiendaList.Add(tiendasls);
@@ -129,22 +129,23 @@ namespace api_DISCON.Controllers
             }
             return Ok(reply);
         }
+
         [HttpPost("InsertarActualizar")]
-        public async Task<IActionResult> Post(CursoModulo t)
+        public async Task<IActionResult> Post(UsuarioCursos t)
         {
-            if (t.IdCursomod== 0)
+            if (t.IdUsucu == 0)
             {
-                ctx.CursoModulo.Add(t);
+                ctx.UsuarioCursos.Add(t);
                 reply.ok = true;
                 reply.data = t;
             }
             else
             {
-                var finName = await ctx.CursoModulo.FirstOrDefaultAsync(e => e.IdCursomod == t.IdCursomod);
+                var finName = await ctx.UsuarioCursos.FirstOrDefaultAsync(e => e.IdUsucu == t.IdUsucu);
 
 
-                finName.IdCursomod = t.IdCursomod;
-                finName.IdModulo = t.IdModulo;
+                finName.IdUsucu = t.IdUsucu;
+                finName.IdUsuario = t.IdUsuario;
                 finName.IdCurso = t.IdCurso;
 
 

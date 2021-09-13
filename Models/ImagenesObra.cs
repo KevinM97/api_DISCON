@@ -15,7 +15,6 @@ namespace api_DISCON.Models
         [Key]
         [Column("ID_IMAGENOBRA", TypeName = "int(11)")]
         public int IdImagenobra { get; set; }
-        [Required]
         [Column("URL_IMAGENOBRA", TypeName = "varchar(50)")]
         public string UrlImagenobra { get; set; }
     }

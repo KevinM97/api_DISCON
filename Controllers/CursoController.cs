@@ -24,7 +24,7 @@ namespace api_DISCON.Controllers
         [HttpPost("Listar")]
         public async Task<IActionResult> Get(Curso c)
         {
-            if (c.IdCurso == 0 && c.IdUsuario == 0)
+            if (c.IdCurso == 0 && c.IdModulo == 0)
             {
                 List<Curso> cursoList = await ctx.Curso.ToListAsync();
                 List<Curso> listCurso = new List<Curso>();
@@ -34,7 +34,6 @@ namespace api_DISCON.Controllers
                     Curso cursols = new Curso
                     {
                         IdCurso = curso.IdCurso,
-                        IdUsuario = curso.IdUsuario,
                         IdModulo = curso.IdModulo,
                         NombreCurso = curso.NombreCurso,
                         DescripcionCurso = curso.DescripcionCurso,
@@ -49,15 +48,15 @@ namespace api_DISCON.Controllers
 
 
             }
-            else if (c.IdCurso == 0 && c.IdUsuario != 0)
+            else if (c.IdCurso == 0 && c.IdModulo != 0)
             {
-                var listCurso = await ctx.Curso.Where(e => e.IdUsuario == c.IdUsuario).ToListAsync();
+                var listCurso = await ctx.Curso.Where(e => e.IdModulo == c.IdModulo).ToListAsync();
                 List<Curso> CursoList = new List<Curso>();
 
                 if (listCurso.Count() == 0)
                 {
                     reply.ok = false;
-                    reply.data = "No hay curso registrado para ese usuario";
+                    reply.data = "No hay modulo registrado para ese usuario";
 
                     return Ok(reply);
                 }
@@ -68,7 +67,6 @@ namespace api_DISCON.Controllers
                         Curso cursols = new Curso
                         {
                             IdCurso = curso.IdCurso,
-                            IdUsuario = curso.IdUsuario,
                             IdModulo = curso.IdModulo,
                             NombreCurso = curso.NombreCurso,
                             DescripcionCurso = curso.DescripcionCurso,
@@ -85,9 +83,9 @@ namespace api_DISCON.Controllers
                 }
 
             }
-            else if (c.IdCurso!= 0 && c.IdUsuario != 0)
+            else if (c.IdCurso!= 0 && c.IdModulo != 0)
             {
-                var curso = await ctx.Curso.FirstOrDefaultAsync(e => e.IdCurso == c.IdCurso && e.IdUsuario == c.IdUsuario);
+                var curso = await ctx.Curso.FirstOrDefaultAsync(e => e.IdCurso == c.IdCurso && e.IdModulo == c.IdModulo);
                 if (curso == null)
                 {
                     reply.ok = false;
@@ -98,7 +96,6 @@ namespace api_DISCON.Controllers
                     Curso ventasls = new Curso
                     {
                         IdCurso = curso.IdCurso,
-                        IdUsuario = curso.IdUsuario,
                         IdModulo = curso.IdModulo,
                         NombreCurso = curso.NombreCurso,
                         DescripcionCurso = curso.DescripcionCurso,
@@ -111,6 +108,50 @@ namespace api_DISCON.Controllers
             }
 
             return Ok(reply);
+        }
+
+        [HttpPost("InsertarActualizar")]
+        public async Task<IActionResult> Post(Curso t)
+        {
+            if (t.IdCurso == 0)
+            {
+                var Modulo = await ctx.Curso.FirstOrDefaultAsync(e => e.IdModulo == t.IdModulo);
+
+                if (Modulo == null)
+                {
+                    reply.ok = false;
+                    reply.data = "No existe ese Modulo";
+
+                    return Ok(reply);
+                }
+                else
+                {
+                    ctx.Curso.Add(t);
+
+                    reply.ok = true;
+                    reply.data = t;
+                }
+            }
+            else if (t.IdCurso != 0)
+            {
+                var finName = await ctx.Curso.FirstOrDefaultAsync(e => e.IdCurso == t.IdCurso);
+
+
+                finName.IdCurso = t.IdCurso;
+                finName.IdModulo = t.IdModulo;
+                finName.NombreCurso = t.NombreCurso;
+                finName.DescripcionCurso = t.DescripcionCurso;
+                finName.ImagenCurso = t.ImagenCurso;
+                finName.EstadoCurso = t.EstadoCurso;
+
+
+
+                ctx.Entry(finName).State = EntityState.Modified;
+                reply.ok = true;
+                reply.data = t;
+            }
+            await ctx.SaveChangesAsync();
+            return Created("Curso", reply);
         }
 
     }

@@ -87,7 +87,7 @@ namespace api_DISCON.Controllers
                 if (clase == null)
                 {
                     reply.ok = false;
-                    reply.data = "Revista no encontrada";
+                    reply.data = "Clase no encontrada";
 
                 }
                 else
@@ -184,7 +184,7 @@ namespace api_DISCON.Controllers
             {
                 var u = await ctx.Clasemodulo.FirstOrDefaultAsync(e => e.NombreClasmod == re.NombreClasmod);
                 //Insertar
-                if (re.IdClasmod == 0 && u != null)//nombre existe
+                if (re.IdClasmod == 0 && u != null)
                 {
 
                     reply.ok = false;
@@ -192,7 +192,7 @@ namespace api_DISCON.Controllers
 
                 }
 
-                else if (re.IdClasmod == 0 && u == null) //nombre NO existe
+                else if (re.IdClasmod == 0 && u == null) 
                 {
                     ctx.Clasemodulo.Add(re);
 
@@ -200,7 +200,7 @@ namespace api_DISCON.Controllers
                     reply.data = re;
                 }
                 //Actualizar
-                else if (re.IdClasmod != 0 && u == null) //nombre NO existe
+                else if (re.IdClasmod != 0 && u == null) 
                 {
                     var revistaName = await ctx.Clasemodulo.FirstOrDefaultAsync(e => e.IdClasmod == re.IdClasmod);
 
@@ -216,13 +216,13 @@ namespace api_DISCON.Controllers
                     reply.ok = true;
                     reply.data = re;
                 }
-                else if (re.IdClasmod != 0 && u != null && re.IdClasmod != u.IdClasmod) //nombre SI existe
+                else if (re.IdClasmod != 0 && u != null && re.IdClasmod != u.IdClasmod)
                 {
                     reply.ok = false;
                     reply.data = "Nombre de la clase en uso";
 
                 }
-                else if (re.IdClasmod != 0 && u != null && re.IdClasmod == u.IdClasmod) //nombre es el mismo que ya tenía
+                else if (re.IdClasmod != 0 && u != null && re.IdClasmod == u.IdClasmod) 
                 {
 
                     var revistaName = await ctx.Clasemodulo.FirstAsync(e => e.IdClasmod == u.IdClasmod);

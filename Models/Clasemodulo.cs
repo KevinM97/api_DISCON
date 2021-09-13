@@ -19,7 +19,7 @@ namespace api_DISCON.Models
         public int? IdPregunta { get; set; }
         [Column("NOMBRE_CLASMOD", TypeName = "varchar(50)")]
         public string NombreClasmod { get; set; }
-        [Column("VIDEO_CLASMOD", TypeName = "varchar(50)")]
+        [Column("VIDEO_CLASMOD", TypeName = "varchar(100)")]
         public string VideoClasmod { get; set; }
         [Column("VALOR_CLASMOD")]
         public bool? ValorClasmod { get; set; }

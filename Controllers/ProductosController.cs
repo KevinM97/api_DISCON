@@ -85,7 +85,7 @@ namespace api_DISCON.Controllers
             {
                 var u = await ctx.Productos.FirstOrDefaultAsync(e => e.NombreProducto == pr.NombreProducto);
                 //Insertar
-                if (pr.IdProducto == 0 && u != null)//nombre existe
+                if (pr.IdProducto == 0 && u != null)
                 {
 
                     reply.ok = false;
@@ -93,7 +93,7 @@ namespace api_DISCON.Controllers
 
                 }
 
-                else if (pr.IdProducto == 0 && u == null) //nombre NO existe
+                else if (pr.IdProducto == 0 && u == null)
                 {
                     ctx.Productos.Add(pr);
 
@@ -101,7 +101,7 @@ namespace api_DISCON.Controllers
                     reply.data = pr;
                 }
                 //Actualizar
-                else if (pr.IdProducto != 0 && u == null) //nombre NO existe
+                else if (pr.IdProducto != 0 && u == null)
                 {
                     var productoName = await ctx.Productos.FirstOrDefaultAsync(e => e.IdProducto == pr.IdProducto);
 
@@ -116,13 +116,13 @@ namespace api_DISCON.Controllers
                     reply.ok = true;
                     reply.data = pr;
                 }
-                else if (pr.IdProducto != 0 && u != null && pr.IdProducto != u.IdProducto) //nombre SI existe
+                else if (pr.IdProducto != 0 && u != null && pr.IdProducto != u.IdProducto)
                 {
                     reply.ok = false;
                     reply.data = "Producto ya registrado";
 
                 }
-                else if (pr.IdProducto != 0 && u != null && pr.IdProducto == u.IdProducto) //nombre es el mismo que ya tenía
+                else if (pr.IdProducto != 0 && u != null && pr.IdProducto == u.IdProducto)
                 {
 
                     var productoName = await ctx.Productos.FirstAsync(e => e.IdProducto == u.IdProducto);
